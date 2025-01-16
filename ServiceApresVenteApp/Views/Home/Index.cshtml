@@ -2,7 +2,36 @@
 @using ServiceApresVente.Models
 @{
     ViewData["Title"] = "Home Page";
-
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-image: url('../../wwwroot/images/téléchargement.png'); /* Assurez-vous que le chemin est correct */
+            background-size: cover; /* Couvre toute la page */
+            background-position: center; /* Centre l'image */
+            background-attachment: fixed; /* Fait en sorte que l'image reste fixe lors du défilement */
+            margin: 0;
+            height: 100vh; /* Assure que l'image couvre toute la hauteur de la page */
+        }
 
+        /* Vous pouvez ajouter du style supplémentaire pour votre contenu */
+        .content {
+            color: white; /* Couleur du texte */
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Bienvenue sur notre page d'accueil</h1>
+        <p>Explorez notre site et découvrez nos produits et services.</p>
+    </div>
+</body>
+</html>
