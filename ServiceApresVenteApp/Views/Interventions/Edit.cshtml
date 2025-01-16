@@ -1,71 +1,87 @@
 ﻿@model ServiceApresVente.Models.Intervention
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Intervention";
 }
 
-<h1>Edit</h1>
-
-<h4>Intervention</h4>
+<h1 class="text-center">Edit Intervention</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post" id="editForm" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="ReclamationId" class="control-label"></label>
-                <input asp-for="ReclamationId" class="form-control" readonly />
-                <span asp-validation-for="ReclamationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Technicien" class="control-label"></label>
-                <input asp-for="Technicien" class="form-control" />
-                <span asp-validation-for="Technicien" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateIntervention" class="control-label"></label>
-                <input asp-for="DateIntervention" class="form-control" readonly />
-                <span asp-validation-for="DateIntervention" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EstSousGarantie" readonly /> @Html.DisplayNameFor(model => model.EstSousGarantie)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CoutMainOeuvre" class="control-label"></label>
-                <input asp-for="CoutMainOeuvre" class="form-control" />
-                <span asp-validation-for="CoutMainOeuvre" class="text-danger"></span>
-            </div>
 
-            <!-- Section for adding pieces -->
-            <div id="piecesSection" class="mb-3">
-                <h5>Pièces de Rechange</h5>
-                <button type="button" id="addPieceButton" class="btn btn-secondary mb-3">Ajouter pièce de rechange</button>
-                <table class="table" id="piecesTable">
-                    <thead>
-                        <tr>
-                            <th>Pièce</th>
-                            <th>Quantité</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be dynamically added here -->
-                    </tbody>
-                </table>
-            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Edit" method="post" id="editForm" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <!-- Hidden Input for Intervention ID -->
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Reclamation ID Field (readonly) -->
+                <div class="form-group">
+                    <label asp-for="ReclamationId" class="control-label"></label>
+                    <input asp-for="ReclamationId" class="form-control" readonly />
+                    <span asp-validation-for="ReclamationId" class="text-danger"></span>
+                </div>
+
+                <!-- Technician Field -->
+                <div class="form-group">
+                    <label asp-for="Technicien" class="control-label"></label>
+                    <input asp-for="Technicien" class="form-control" />
+                    <span asp-validation-for="Technicien" class="text-danger"></span>
+                </div>
+
+                <!-- Date of Intervention Field (readonly) -->
+                <div class="form-group">
+                    <label asp-for="DateIntervention" class="control-label"></label>
+                    <input asp-for="DateIntervention" class="form-control" readonly />
+                    <span asp-validation-for="DateIntervention" class="text-danger"></span>
+                </div>
+
+                <!-- Guarantee Status Field (readonly) -->
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="EstSousGarantie" disabled />
+                        @Html.DisplayNameFor(model => model.EstSousGarantie)
+                    </label>
+                </div>
+
+                <!-- Labor Cost Field -->
+                <div class="form-group">
+                    <label asp-for="CoutMainOeuvre" class="control-label"></label>
+                    <input asp-for="CoutMainOeuvre" class="form-control" />
+                    <span asp-validation-for="CoutMainOeuvre" class="text-danger"></span>
+                </div>
+
+                <!-- Section for Adding Pieces -->
+                <div id="piecesSection" class="mb-3">
+                    <h5>Pièces de Rechange</h5>
+                    <button type="button" id="addPieceButton" class="btn btn-secondary mb-3">Ajouter pièce de rechange</button>
+                    <table class="table table-bordered" id="piecesTable">
+                        <thead>
+                            <tr>
+                                <th>Pièce</th>
+                                <th>Quantité</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamically added rows will appear here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <!-- Back to List Link -->
+    <div class="text-center">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {
@@ -77,30 +93,31 @@
         $(document).ready(function () {
             let pieceCounter = 0;
 
-            // Event listener for "Ajouter pièce de rechange" button
+            // Event listener for "Add Piece" button
             $("#addPieceButton").click(function () {
                 pieceCounter++;
 
                 $("#piecesTable tbody").append(`
-                <tr id="pieceRow_${pieceCounter}">
-                    <td>
-                        <select name="pieces1[${pieceCounter - 1}].Id" class="form-control">
+                    <tr id="pieceRow_${pieceCounter}">
+                        <td>
+                            <select name="pieces1[${pieceCounter - 1}].Id" class="form-control">
         @foreach (var piece in ViewBag.Pieces)
         {
-                                    <option value="@piece.Id">@piece.Nom</option>
+                                        <option value="@piece.Id">@piece.Nom</option>
         }
-                        </select>
-                    </td>
-                    <td>
-                        <input type="number" name="pieces1[${pieceCounter - 1}].Quantite" class="form-control" min="1" value="1" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger removePieceButton">Supprimer</button>
-                    </td>
-                </tr>
-            `);
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" name="pieces1[${pieceCounter - 1}].Quantite" class="form-control" min="1" value="1" required />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger removePieceButton">Supprimer</button>
+                        </td>
+                    </tr>
+                `);
             });
 
+            // Re-index piece rows after removal
             function reindexPieceRows() {
                 let index = 0;
                 $("#piecesTable tbody tr").each(function () {
@@ -110,7 +127,7 @@
                 });
             }
 
-            // Call this after removing a row
+            // Event listener for removing a piece row
             $("#piecesTable").on("click", ".removePieceButton", function () {
                 $(this).closest("tr").remove();
                 reindexPieceRows();

@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<ServiceApresVente.Models.Intervention>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Interventions List";
 }
 
-<h1>Index</h1>
+<h1>List of Interventions</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<table class="table">
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -21,10 +22,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.EstSousGarantie)
             </th>
-            <th>
+            <th class="text-end">
                 @Html.DisplayNameFor(model => model.CoutMainOeuvre)
             </th>
-            <th>
+            <th class="text-end">
                 @Html.DisplayNameFor(model => model.CoutTotal)
             </th>
             <th>
@@ -34,32 +35,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Technicien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateIntervention)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstSousGarantie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoutMainOeuvre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoutTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reclamation.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Technicien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateIntervention)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstSousGarantie)
+                </td>
+                <td class="text-end">
+                    @Html.DisplayFor(modelItem => item.CoutMainOeuvre)
+                </td>
+                <td class="text-end">
+                    @Html.DisplayFor(modelItem => item.CoutTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reclamation.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a> |
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this intervention?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
